@@ -30,11 +30,10 @@ void station_load_train(struct station *station, int count)
     }
     while(station->numberOfPassengersWalkinginTheTrain>0)
     {
-      // printf("i dead here a\n"); 
+     
      pthread_cond_wait(&(station->TrainWaiting),&(station->mutex));   
     }
 
- // printf("train left  empty :%d  %d  %d\n",station->numberOfEmptySeats,station->numberOfPassengersWalkinginTheTrain , station->numberOfPassengersinTheStation);
     station->numberOfEmptySeats=0;
     station->numberOfPassengersWalkinginTheTrain=0;
     pthread_mutex_unlock(&(station->mutex));
@@ -50,11 +49,10 @@ void station_wait_for_train(struct station *station)
      
     while(station->numberOfEmptySeats==station->numberOfPassengersWalkinginTheTrain)
     {
-    //     printf("i dead here c\n"); 
+  
          pthread_cond_wait(&(station->Traincame),&(station->mutex));    
     }
-  //printf("i found a %d chairs we are %d person and %d standing in the train\n",station->numberOfEmptySeats, station->numberOfPassengersinTheStation,station->numberOfPassengersWalkinginTheTrain);
-    //wait untill a train with at least 1 empty chair
+
     
     station->numberOfPassengersinTheStation--;
     station->numberOfPassengersWalkinginTheTrain++;
